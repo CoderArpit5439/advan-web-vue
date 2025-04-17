@@ -62,6 +62,24 @@
 				</div>
 			</div>
 			<!-- EXTRA PRODUCT THREE START -->
+			<div class="block-space block-space--layout--divider-nl"></div>
+			<!-- (MODAL) IF THERE IS NO LOGIN AND NO TOKEN THIS MODAL WILL OPEN START-->
+			<div class="modal fade" tabindex="-1" role="dialog" :class="{ show: showModal }"
+				:style="showModal ? 'display: block; background-color: rgba(0,0,0,0.5)' : 'display: none'">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							Do you want to see more products? If yes, please go to the login page to view the details.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+							<a href="/login" type="button" class="btn btn-danger">Login</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- (MODAL) IF THERE IS NO LOGIN AND NO TOKEN THIS MODAL WILL OPEN END-->
+			 
 </template>
 
 <script>
@@ -73,6 +91,7 @@ import "keen-slider/keen-slider.min.css";
 export default {
 data() {
 return {
+	showModal: false,
     extraFeatThree: [],
     extraProductThreeSlider: null,
 };
@@ -109,8 +128,18 @@ this.extraProductThreeSlider?.next();
 },
 
 handleCardClick(id) {
-this.$router.push(`/product/${id}`);
-},
+			const token = localStorage.getItem('authToken');
+			if (token) {
+				// Redirect to the product detail page if token exists
+				window.location.href = `/product/${id}/`;
+			} else {
+				// Show modal if token does not exist
+				this.showModal = true;
+			}
+		},
+		closeModal() {
+			this.showModal = false;
+		},
 },
 
 async mounted() {

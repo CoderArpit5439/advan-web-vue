@@ -12,7 +12,7 @@
 				</div>
 				<div class="block-finder__image"
 					style="background-image: url('https://images.unsplash.com/photo-1552581234-26160f608093?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8');">
-					<div class="keen-slider">
+					<div ref="sliderRef" class="keen-slider">
 						<div v-for="(slide, index) in slides" :key="index" :style="{
 							backgroundImage: 'url(' + slide.image + ')',
 							backgroundSize: 'cover',
@@ -140,7 +140,7 @@ import axios from 'axios';
 import { Url } from '~/config/url';
 import KeenSlider from "keen-slider"
 import "keen-slider/keen-slider.min.css"
-import { HomePageDealZone } from '#components';
+
 
 export default {
 	data() {
@@ -148,8 +148,7 @@ export default {
 			showModal: false,
 			categories: [],
 			slider: null,
-
-
+			interval: null,
 
 			card: {
 				title: "When Buying Parts With Installation",
@@ -203,29 +202,22 @@ export default {
 	},
 	beforeUnmount() {
 		if (this.slider) this.slider.destroy();
+		if (this.interval) clearInterval(this.interval);
 	},
 
-	// mounted() {
-	// 	this.fetchCategory()
-	// 	this.$nextTick(() => {
-	// 		this.slider = new KeenSlider('.keen-slider', {
-	// 			loop: true,
-	// 			slides: {
-	// 				perView: 1,
-	// 				spacing: 10,
-	// 			},
-	// 			created: (instance) => {
-	// 				setInterval(() => {
-	// 					instance.next();
-	// 				}, 3000);
-	// 			},
-	// 		});
-	// 	});
-	// },
-
 	mounted() {
-    this.fetchCategory();
-}
+		this.fetchCategory();
+
+		this.slider = new KeenSlider(this.$refs.sliderRef, {
+			loop: true,
+		});
+
+		this.interval = setInterval(() => {
+			if (this.slider) {
+				this.slider.next();
+			}
+		}, 3000);
+	}
 
 
 

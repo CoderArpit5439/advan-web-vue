@@ -7,10 +7,10 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i"
         },
-        {
-          rel: "stylesheet",
-          href: "node_modules/keen-slider/keen-slider.min.css"
-        },
+        // {
+        //   rel: "stylesheet",
+        //   href: "node_modules/keen-slider/keen-slider.min.css"
+        // },
 
         {
           rel: "stylesheet",
@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       script: [
         { src: "https://www.googletagmanager.com/gtag/js?id=UA-97489509-8" },
         { src: "https://www.googletagmanager.com/gtag/js?id=UA-97489509-8" },
-        { src: "node_modules/keen-slider/keen-slider.js" },
+        // { src: "node_modules/keen-slider/keen-slider.js" },
 
       ]
     }
